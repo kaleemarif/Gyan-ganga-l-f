@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GYAN GANGA Lost & Found Hub</title>
+
+<style>
+/* ---------------------------------------------------- */
+/* 1. Base Styles & Utilities (Mobile-First Approach) */
+/* ---------------------------------------------------- */
+
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+
+:root {
+/* Color Palette: Derived from your logo and professional aesthetic */
+--clr-bg-dark: #1F2232; /* Deep Navy Blue for primary background */
+--clr-accent-cyan: #00B5B5; /* Bright Cyan/Teal for highlights & primary actions */
+--clr-accent-red: #D74A3D; /* Warm Red/Orange for CTA & important elements */
+--clr-text-light: #F0F0F0; /* Off-white for general text */
+--clr-dark-contrast: #2E3147; /* Slightly lighter dark for cards/forms, provides depth */
+
+/* Shadows for modern UI feel */
+--shadow-light: 0 4px 12px rgba(0, 0, 0, 0.3);
+--shadow-accent: 0 4px 15px rgba(0, 181, 181, 0.4);
+
+/* Transitions for smooth interactions */
+--transition-fast: all 0.2s ease-in-out;
+--transition-medium: all 0.3s ease-in-out;
+}
+
+
+body {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+background-color: var(--clr-bg-dark);
+color: var(--clr-text-light);
+line-height: 1.6;
+min-height: 100vh; /* Ensures body takes full viewport height */
+overflow-x: hidden; /* Prevents horizontal scroll on small screens */
+-webkit-font-smoothing: antialiased; /* Better font rendering */
+-moz-osx-font-smoothing: grayscale; /* Better font rendering */
+}
+
+
+a {
+text-decoration: none;
+color: var(--clr-accent-cyan);
+transition: var(--transition-medium);
+}
+
+
+a:hover {
+color: var(--clr-text-light);
+opacity: 0.9;
+}
+
+
+button, input[type="submit"] {
+cursor: pointer;
+border: none;
+transition: var(--transition-medium);
+}
+
+
+/* Form inputs consistency */
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+select,
+textarea {
+width: 100%;
+padding: 0.9rem;
+border: 1px solid var(--clr-accent-cyan);
+background: var(--clr-bg-dark);
+color: var(--clr-text-light);
+border-radius: 8px;
+font-size: 1rem;
+transition: var(--transition-medium);
+}
+
+
+input:focus,
+select:focus,
+textarea:focus {
+border-color: var(--clr-accent-red);
+box-shadow: 0 0 10px rgba(0, 181, 181, 0.5);
+outline: none;
+}
+
+
+/* Style for file input, which is harder to style directly */
+input[type="file"] {
+padding: 10px 0;
+color: var(--clr-text-light);
+background: transparent;
+border: none;
+border-radius: 0;
+}
+
+
+/* ---------------------------------------------------- */
+/* 2. Header and Navigation (Responsive & Sticky) */
+/* ---------------------------------------------------- */
+
+
+.header {
+background: rgba(31, 34, 50, 0.95); /* Semi-transparent dark blue */
+backdrop-filter: blur(5px); /* Modern frosted glass effect */
+border-bottom: 2px solid var(--clr-accent-red);
+position: sticky;
+top: 0;
+z-index: 100; /* Ensures header stays on top */
+box-shadow: var(--shadow-light);
+}
+
+
+.nav {
+display: flex;
+flex-direction: column; /* Mobile default: Stacked vertically */
+align-items: center;
+padding: 0.8rem 1rem;
+gap: 0.8rem;
+max-width: 1200px; /* Constrain width on larger screens */
+margin: 0 auto;
+}
+
+
+.nav-brand {
+display: flex;
+align-items: center;
+gap: 0.7rem;
+}
+
+
+.college-logo {
+height: 35px; /* Fixed height for consistency */
+width: auto;
+background-color: #FFFFFF; /* White background for logo clarity */
+padding: 3px;
+border-radius: 50%; /* Circular shape */
+box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Subtle glow */
+}
+
+
+.nav-brand h2 {
+color: var(--clr-accent-red);
+font-size: 1.5rem;
+font-weight: 900;
+letter-spacing: 1px;
+}
+
+
+.nav-links {
+display: none; /* Hidden on mobile by default */
+list-style: none;
+gap: 1.5rem;
+}
+
+
+.nav-links li a {
+font-weight: 500;
+padding: 0.5rem 0; /* clickable area */
+}
+
+/* --- Base CTA Button Style --- */
+.cta-button {
+color: var(--clr-text-light);
+padding: 0.6rem 1.4rem;
+border-radius: 25px;
+font-weight: bold;
+font-size: 0.9rem;
+text-transform: uppercase;
+transition: var(--transition-medium);
+flex-grow: 1; /* Both buttons grow equally on mobile */
+text-align: center;
+}
+
+/* --- NEW CTA GROUP STYLES (for Mobile) --- */
+.cta-group {
+display: flex; /* Show both buttons on mobile */
+gap: 10px;
+width: 100%; /* Take full width on mobile */
+max-width: 400px;
+justify-content: center;
+margin-top: 10px;
+}
+
+/* Lost button color scheme */
+.lost-btn {
+background-color: var(--clr-accent-red);
+box-shadow: 0 0 10px rgba(215, 74, 61, 0.6);
+}
+
+.lost-btn:hover {
+background-color: #A33A30;
+transform: translateY(-2px); /* Slight lift effect */
+box-shadow: 0 5px 15px rgba(215, 74, 61, 0.8);
+}
+
+/* Found button color scheme (New) */
+.found-btn {
+background-color: var(--clr-accent-cyan); /* Cyan for Found to distinguish */
+color: var(--clr-bg-dark); /* Dark text on bright button */
+box-shadow: 0 0 10px rgba(0, 181, 181, 0.6);
+}
+.found-btn:hover {
+background-color: #008888;
+transform: translateY(-2px);
+box-shadow: 0 5px 15px rgba(0, 181, 181, 0.8);
+}
+
+
+/* ---------------------------------------------------- */
+/* 3. Hero Section (Dynamic Background & Search) */
+/* ---------------------------------------------------- */
+
+
+.hero {
+/* Campus image: 1000265677.jpg */
+background:
+linear-gradient(rgba(31, 34, 50, 0.92), rgba(31, 34, 50, 0.85)), /* Strong dark overlay */
+url('1000265677.jpg') center center / cover no-repeat fixed; /* Parallax effect */
+
+text-align: center;
+padding: 6rem 1rem;
+min-height: 400px;
+display: flex;
+align-items: center;
+justify-content: center;
+position: relative; /* For z-index stacking if needed */
+}
+
+
+.hero-content {
+max-width: 800px;
+width: 100%;
+position: relative;
+z-index: 2; /* Ensures content is above background overlay */
+}
+
+
+.hero-content h1 {
+font-size: 2.2rem;
+margin-bottom: 0.8rem;
+color: var(--clr-accent-cyan);
+text-shadow: 0 0 10px rgba(0, 0, 0, 0.9); /* Strong text shadow for legibility */
+font-weight: 700;
+}
+
+
+.hero-content p {
+font-size: 1rem;
+margin-bottom: 2rem;
+opacity: 0.8;
+color: var(--clr-text-light);
+}
+
+
+.search-bar {
+display: flex;
+flex-direction: column; /* Stacked on mobile */
+max-width: 450px;
+margin: 0 auto;
+gap: 0.5rem;
+background: var(--clr-dark-contrast); /* Slightly lighter background for search bar */
+padding: 10px;
+border-radius: 30px;
+box-shadow: var(--shadow-light);
+}
+
+
+.search-input {
+padding: 0.8rem 1.2rem;
+border: 1px solid var(--clr-accent-cyan);
+background: var(--clr-bg-dark);
+color: var(--clr-text-light);
+border-radius: 25px;
+font-size: 1rem;
+}
+
+
+.search-button {
+padding: 0.8rem 1.5rem;
+background-color: var(--clr-accent-cyan);
+color: var(--clr-bg-dark); /* Dark text on cyan button */
+font-weight: 700;
+border-radius: 25px;
+}
+
+
+.search-button:hover {
+background-color: #008888;
+}
+
+
+/* ---------------------------------------------------- */
+/* 4. Activity Cards & Forms (Structured Layout) */
+/* ---------------------------------------------------- */
+
+
+.activity-section {
+max-width: 1200px;
+margin: 2rem auto;
+padding: 0 1rem;
+}
+
+
+.activity-section h2 {
+text-align: center;
+margin-bottom: 2rem;
+font-size: 2rem;
+color: var(--clr-accent-cyan);
+border-bottom: 2px solid var(--clr-accent-red);
+display: inline-block; /* For the border to wrap content */
+padding-bottom: 0.5rem;
+width: auto;
+margin: 0 auto 2rem;
+display: block;
+}
+
+
+.cards-grid {
+display: grid;
+grid-template-columns: 1fr; /* Single column on mobile */
+gap: 1.5rem;
+}
+
+
+.card {
+background: var(--clr-dark-contrast);
+padding: 1.5rem;
+border-radius: 12px;
+border-left: 5px solid var(--clr-accent-red); /* Accent border for visual interest */
+box-shadow: var(--shadow-light);
+transition: var(--transition-medium);
+}
+
+
+.card:hover {
+transform: translateY(-5px); /* Lift effect on hover */
+box-shadow: var(--shadow-accent);
+}
+
+
+.card h3 {
+color: var(--clr-accent-cyan);
+margin-bottom: 0.5rem;
+font-size: 1.2rem;
+}
+
+
+.card p {
+font-size: 0.95rem;
+opacity: 0.8;
+}
+
+
+/* Form Specific Styles */
+.form-page {
+padding: 2rem 1rem;
+display: flex;
+justify-content: center;
+min-height: 80vh; /* Ensures form content is well spaced */
+}
+
+
+.form-section {
+max-width: 550px;
+width: 100%;
+padding: 2rem;
+background: var(--clr-dark-contrast);
+border-radius: 15px;
+border: 1px solid var(--clr-accent-red);
+box-shadow: var(--shadow-light);
+}
+
+
+.form-section h1 {
+text-align: center;
+font-size: 2.2rem;
+margin-bottom: 1.5rem;
+color: var(--clr-accent-red);
+}
+
+
+.report-form {
+display: flex;
+flex-direction: column;
+gap: 1.2rem;
+}
+
+
+.form-group label {
+display: block;
+margin-bottom: 0.4rem;
+font-weight: bold;
+color: var(--clr-accent-cyan);
+}
+
+
+.submit-button {
+padding: 1rem;
+background-color: var(--clr-accent-red);
+color: var(--clr-text-light);
+font-size: 1.1rem;
+font-weight: bold;
+border-radius: 8px;
+margin-top: 1rem;
+}
+
+
+.submit-button:hover {
+background-color: #A33A30;
+transform: translateY(-1px);
+}
+
+
+/* ---------------------------------------------------- */
+/* 5. Media Queries (Fully Responsive Layout) */
+/* ---------------------------------------------------- */
+
+
+/* Tablet and larger phones (600px and up) */
+@media (min-width: 600px) {
+.nav {
+flex-direction: row;
+justify-content: space-between;
+padding: 0.8rem 2rem;
+}
+.nav-links {
+display: flex; /* Show links on tablet/desktop */
+}
+.hero {
+padding: 8rem 2rem;
+min-height: 500px;
+}
+.hero-content h1 {
+font-size: 3rem;
+}
+.search-bar {
+flex-direction: row; /* Search bar horizontal */
+padding: 5px;
+}
+.search-input {
+flex-grow: 1; /* Input takes available space */
+}
+.search-button {
+width: 120px; /* Fixed width for button */
+flex-shrink: 0; /* Prevents button from shrinking */
+}
+.cards-grid {
+grid-template-columns: repeat(2, 1fr); /* Two columns on tablet */
+}
+
+/* Hide the button group on larger screens, as navigation links already cover it */
+.cta-group {
+display: none;
+}
+}
+
+
+/* PC/Desktop (1024px and up) */
+@media (min-width: 1024px) {
+.hero {
+padding: 10rem 2rem;
+min-height: 600px;
+}
+.hero-content h1 {
+font-size: 4rem;
+}
+.cards-grid {
+grid-template-columns: repeat(3, 1fr); /* Three columns on desktop */
+gap: 2rem;
+}
+}
+</style>
+</head>
+<body>
+<header class="header">
+<nav class="nav">
+<div class="nav-brand">
+<img src="1000265679.jpg" alt="Gyan Ganga Logo" class="college-logo">
+<h2>GG L&F Hub</h2>
+</div>
+<ul class="nav-links">
+<li><a href="index.html">Home</a></li>
+<li><a href="lost.html">Lost Items</a></li>
+<li><a href="found.html">Found Items</a></li>
+</ul>
+<div class="cta-group">
+<a href="lost.html" class="cta-button lost-btn">Report Lost</a>
+<a href="found.html" class="cta-button found-btn">Report Found</a>
+</div>
+</nav>
+</header>
+
+
+<main>
+<section class="hero">
+<div class="hero-content">
+<h1>GYAN GANGA Lost & Found Hub</h1>
+<p>Reuniting belongings in our college community</p>
+<div class="search-bar">
+<input type="text" class="search-input" placeholder="Search for lost or found items...">
+<button type="button" class="search-button">Search</button>
+</div>
+</div>
+</section>
+
+
+<section class="activity-section">
+<h2>Recent Activity</h2>
+<div class="cards-grid">
+<div class="card">
+<h3>Lost: ID Card (Rohan S.)</h3>
+<p>Last seen: Library, 2 hours ago. Contact owner for reward.</p>
+</div>
+<div class="card">
+<h3>Found: Headphones (JBL)</h3>
+<p>Found at: Canteen. Currently with security guard, Block A.</p>
+</div>
+<div class="card">
+<h3>Lost: Wallet (Black)</h3>
+<p>Last seen: Parking Lot. Contains College ID and Bus Pass.</p>
+</div>
+<div class="card">
+<h3>Found: Keys (Dorm Room)</h3>
+<p>Found near: Sports Ground. Please identify key features.</p>
+</div>
+<div class="card">
+<h3>Lost: Pen Drive (32GB)</h3>
+<p>Last seen: Block A, Room 305. Contains important project files.</p>
+</div>
+<div class="card">
+<h3>Found: Spectacles (Black Frame)</h3>
+<p>Found at: College Bus Stop. Contact the finder.</p>
+</div>
+</div>
+</section>
+</main>
+
+
+<script src="script.js?v=1.0.1"></script>
+</body>
+</html>
